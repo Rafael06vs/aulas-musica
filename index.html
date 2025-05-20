@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aulas de Música</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #ffd700;
+      text-align: center;
+    }
+    p.subtitle {
+      font-size: 1.3em;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .card {
+      background-color: rgba(44, 44, 64, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      width: 260px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s, background-color 0.3s;
+      color: #eee;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      background-color: rgba(68, 68, 102, 0.95);
+    }
+    .card h2 {
+      color: #00e6e6;
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 0.95em;
+      color: #ccc;
+    }
+    form {
+      background-color: rgba(44, 44, 64, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 450px;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      color: white;
+    }
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    form input, form select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+    }
+    form button {
+      background-color: #25D366;
+      border: none;
+      color: white;
+      padding: 14px 25px;
+      border-radius: 50px;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    form button:hover {
+      background-color: #1ebe57;
+    }
+    @media (max-width: 600px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      .card {
+        width: 90%;
+      }
+      form {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>Aulas de Música</h1>
+    <p class="subtitle">Canto, Contra-Baixo e Bateria para todos os níveis!</p>
+
+    <div class="cards">
+      <div class="card" onclick="alert('Aulas de Canto: Técnicas para aprimorar sua voz, respiração e performance.')">
+        <h2>Canto</h2>
+        <p>Melhore sua afinação, respiração e presença de palco com técnicas profissionais.</p>
+      </div>
+      <div class="card" onclick="alert('Aulas de Contra-Baixo: Groove, improvisação e leitura de cifras para você tocar com estilo.')">
+        <h2>Contra-Baixo</h2>
+        <p>Aprenda groove, improvisação e leitura de cifras com aulas práticas e teóricas.</p>
+      </div>
+      <div class="card" onclick="alert('Aulas de Bateria: Domine ritmos, técnica e independência com exercícios guiados.')">
+        <h2>Bateria</h2>
+        <p>Domine ritmos, técnicas de pedal duplo e independência com exercícios guiados.</p>
+      </div>
+    </div>
+
+    <form id="matriculaForm">
+      <label for="nome">Nome Completo</label>
+      <input type="text" id="nome" name="nome" required placeholder="Seu nome completo" />
+
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required placeholder="seu@email.com" />
+
+      <label for="telefone">Telefone</label>
+      <input type="tel" id="telefone" name="telefone" required placeholder="(XX) 9XXXX-XXXX" pattern="[0-9\s()+-]{10,15}" />
+
+      <label for="curso">Curso desejado</label>
+      <select id="curso" name="curso" required>
+        <option value="" disabled selected>Selecione uma opção</option>
+        <option value="Canto">Canto</option>
+        <option value="Contra-Baixo">Contra-Baixo</option>
+        <option value="Bateria">Bateria</option>
+      </select>
+
+      <button type="submit">Quero me matricular</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('matriculaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nome = this.nome.value.trim();
+      const email = this.email.value.trim();
+      const telefone = this.telefone.value.trim();
+      const curso = this.curso.value;
+
+      if (!nome || !email || !telefone || !curso) {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const aluno = { nome, email, telefone, curso, data: new Date().toISOString() };
+
+      const listaAlunos = JSON.parse(localStorage.getItem('listaAlunos')) || [];
+      listaAlunos.push(aluno);
+      localStorage.setItem('listaAlunos', JSON.stringify(listaAlunos));
+
+      let whatsappNumber = '';
+      if (curso === 'Canto') {
+        whatsappNumber = '5511980117184';
+      } else if (curso === 'Bateria' || curso === 'Contra-Baixo') {
+        whatsappNumber = '55119966669071';
+      }
+
+      const mensagem = encodeURIComponent(
+        `Olá! Meu nome é ${nome}, telefone: ${telefone}, email: ${email}. Tenho interesse nas aulas de ${curso}.`
+      );
+
+      window.open(`https://wa.me/${whatsappNumber}?text=${mensagem}`, '_blank');
+    });
+  </script>
+</body>
+</html>
